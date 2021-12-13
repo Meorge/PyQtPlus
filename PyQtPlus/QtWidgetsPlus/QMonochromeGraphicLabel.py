@@ -1,5 +1,6 @@
+from typing import Union
 from PyQt6.QtCore import QObject, QRect, QRectF, Qt
-from PyQt6.QtGui import QColor, QColorConstants, QPaintEvent, QPainter, QPixmap
+from PyQt6.QtGui import QColor, QColorConstants, QGradient, QPaintEvent, QPainter, QPixmap
 from PyQt6.QtWidgets import QWidget
 from PyQt6.QtSvg import QSvgRenderer
 
@@ -7,11 +8,11 @@ class QMonochromeGraphicLabel(QWidget):
     def __init__(self,
         parent: QObject = None,
         svgPath: str = None,
-        tintColor: QColor = None,
+        tintColor: Union[QColor, QGradient] = None,
         aspectRatioMode: Qt.AspectRatioMode = Qt.AspectRatioMode.IgnoreAspectRatio
         ):
         super().__init__(parent)
-        self.__tintColor: QColor = None
+        self.__tintColor: Union[QColor, QGradient] = None
         self.__svgPath: str = ''
         self.__aspectRatioMode = Qt.AspectRatioMode.IgnoreAspectRatio
 
@@ -19,8 +20,8 @@ class QMonochromeGraphicLabel(QWidget):
         self.setSvgPath(svgPath)
         self.setAspectRatioMode(aspectRatioMode)
 
-    def tintColor(self) -> QColor: return self.__tintColor
-    def setTintColor(self, color: QColor): self.__tintColor = color
+    def tintColor(self) -> Union[QColor, QGradient]: return self.__tintColor
+    def setTintColor(self, color: Union[QColor, QGradient]): self.__tintColor = color
 
     def svgPath(self) -> str: return self.__svgPath
     def setSvgPath(self, path: str):

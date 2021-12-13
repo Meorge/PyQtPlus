@@ -1,5 +1,5 @@
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QColorConstants
+from PyQt6.QtCore import QPointF, Qt
+from PyQt6.QtGui import QColor, QColorConstants, QGradient, QLinearGradient
 from PyQt6.QtWidgets import QGridLayout, QMainWindow, QApplication, QVBoxLayout, QWidget
 from PyQtPlus.QtWidgetsPlus import QColorPicker, QMonochromeGraphicLabel
 from PyQtPlus.QtOnboarding import QOnboardingItem, QWizardTitle
@@ -48,7 +48,13 @@ class SvgIconView(QMainWindow):
         self.ly.addWidget(self.bP, 1, 1)
         self.ly.addWidget(self.cP, 1, 2)
 
-        self.ly
+        self.gradient = QLinearGradient(QPointF(0, 0), QPointF(1, 1))
+        self.gradient.setCoordinateMode(QGradient.CoordinateMode.ObjectMode)
+        self.gradient.setColorAt(1, QColor(150, 30, 230))
+        self.gradient.setColorAt(0, QColor(30, 80, 255))
+        self.g = QMonochromeGraphicLabel(svgPath='thumbup.svg', tintColor=self.gradient)
+
+        self.ly.addWidget(self.g, 2, 0)
 
         self.w = QWidget()
         self.w.setLayout(self.ly)
