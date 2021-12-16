@@ -1,11 +1,12 @@
-from PyQt6.QtCore import QEasingCurve, QMarginsF, QRectF, QVariantAnimation, Qt
-from PyQt6.QtWidgets import QWidget
+from PyQt6.QtCore import QEasingCurve, QMarginsF, QRectF, QSize, QVariantAnimation, Qt
+from PyQt6.QtWidgets import QSizePolicy, QWidget
 from PyQt6.QtGui import QColorConstants, QPaintEvent, QPainter, QBrush, QPen, QColor
 from math import pi
 
 class QSpinningProgressIndicator(QWidget):
     def __init__(self, parent=None, color: QColor = None, indeterminate: bool = True):
         super().__init__(parent)
+        self.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
         self.__color = QColor(80, 160, 255) if color is None else color
 
         self.__pen = QPen(self.__color, 5, style = Qt.PenStyle.CustomDashLine, cap = Qt.PenCapStyle.RoundCap, join = Qt.PenJoinStyle.RoundJoin)
@@ -54,7 +55,11 @@ class QSpinningProgressIndicator(QWidget):
     def __setOffset(self, offset: float):
         self.__offset = offset
         self.update()
-        
+
+    def sizeHint(self) -> QSize:
+        hint = QSize(15, 15)
+        print(f'size hint is {hint}')
+        return hint
 
     def paintEvent(self, a0: QPaintEvent) -> None:
         with QPainter(self) as p:
